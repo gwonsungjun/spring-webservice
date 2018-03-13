@@ -15,12 +15,10 @@ cache:
 
 script: "./gradlew clean build"
 
-# CI 실행 완료시 메일로 알람
-notifications:
-  email:
-    recipients:
-      - sungjunpizz@gmail.com
-
+before_deploy:
+  - zip -r springboot-webservice *
+  - mkdir -p deploy
+  - mv springboot-webservice.zip deploy/springboot-webservice.zip
 
 deploy:
   - provider: s3
@@ -30,8 +28,14 @@ deploy:
     region: ap-northeast-2
     skip_cleanup: true
     acl: public_read
+    local_dir: deploy # before_deploy에서 생성한 디렉토리
     wait-until-deployed: true
     on:
       repo: gwonsungjun/spring-webservice #Github 주소
       branch: master
 
+# CI 실행 완료시 메일로 알람
+notifications:
+  email:
+    recipients:
+      - sungjunpizz@gmail.com
