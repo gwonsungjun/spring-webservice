@@ -34,7 +34,8 @@ deploy:
       repo: gwonsungjun/spring-webservice #Github 주소
       branch: master
 
-  - provider: codedeploy access_key_id: $AWS_ACCESS_KEY # Travis repo settings에 설정된 값
+  - provider: codedeploy
+    access_key_id: $AWS_ACCESS_KEY # Travis repo settings에 설정된 값
     secret_access_key: $AWS_SECRET_KEY # Travis repo settings에 설정된 값
     bucket: springboot-webservice # S3 버킷
     key: springboot-webservice.zip # 빌드 파일을 압축해서 전달
